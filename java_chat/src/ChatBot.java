@@ -123,29 +123,26 @@ import java.util.Random;
 import java.util.regex.*;
 import java.io.*;
 
-public class ChatBot{
-  private String file;
+public class ChatBot{ 
+  private String file; 
   private ArrayList<String> answers = new ArrayList<String>();
   private boolean isSilent = false;
   private String botName;
   private String userName;
   
-  ChatBot(){
+  ChatBot(){ //Class constructor
     this.file = "en_text.txt";
     this.botName = " Bot: ";
     this.userName = " You: ";
 	answersPath();
   }
   
-  private void setUserName(String user) {
+  private void setUserName(String user) { 
 	  this.userName = user;
   }
   
-  private void answersPath(){
-	 /*
-	Path path = Paths.get(this.file);
-	this.answers = Files.readAllLines(path);
-	*/
+  private void answersPath(){ //Opens and reads file
+
 	 try {
 	 FileReader fr = new FileReader("include/" + file);
 	 BufferedReader input = new BufferedReader(fr);
@@ -161,7 +158,7 @@ public class ChatBot{
 	}
   }
 
-  private String randomAnswer() {
+  private String randomAnswer() { //Chooses answer from ArrayList
 	  Random rnd = new Random();
 	  int randNum = rnd.nextInt(answers.size());
 	  String randomLine = answers.get(randNum);
@@ -170,36 +167,36 @@ public class ChatBot{
   private String getFile(){
 	  return file;
   }
-  private void setFile(String f){
+  private void setFile(String f){ // Changing default file with answers
 	this.file = f;
 	answers.clear();
 	answersPath();  
   }
-  private void setIsSilent(){
+  private void setIsSilent(){ // Goes sleep
 	  this.isSilent = true;
   }
-  private void getUp() {
+  private void getUp() { // Wake up
 	  if (this.isSilent = true){
 		  this.isSilent = false;
 	  }
   }
-  private String date() {
+  private String date() {// Date
 	  LocalDateTime now = LocalDateTime.now();
 	  return DateTimeFormatter.ofPattern("MM-dd-yyy").format(now);
   }
-  private String time() {
+  private String time() { // Time 
 	  LocalDateTime now = LocalDateTime.now();
 	  return DateTimeFormatter.ofPattern("HH:mm:ss").format(now);
   }
 
-  private void setName(Scanner in) {
+  private void setName(Scanner in) { //Changes user name
 	  System.out.print("\n Welcome to chatbot. Enter your name: ");
 	  String name = in.nextLine();
 	  setUserName(name);
 	  System.out.println(" Hello, " + userName + ". What do you want to know?\n");
   }
   
-  private void dialogVariants() {
+  private void dialogVariants() {  // Answer variants 
 	  	Scanner in = new Scanner(System.in);
 	    while (true) {
 	      System.out.print(userName);
@@ -210,7 +207,7 @@ public class ChatBot{
 	    			  "\n Session is over.");
 	    	  break;
 	      }
-	      if (question.equals("")) {
+	      if (question.equals("")) { // Empty message case
 	    	  System.out.println("Empty.");
 	    	  continue;
 	      }
@@ -232,15 +229,15 @@ public class ChatBot{
 	      	}
 	        continue;
 	      }
-	      if(question.equals("silent")) { 
+	      if(question.equals("silent")) { // Silence case
 	    	  setIsSilent();
 	      }
-	      if (question.equals("getUp")) {
+	      if (question.equals("getUp")) { // Waking up case
 	    	  getUp();
 	    	  System.out.println("Show me what you got.");
 	    	  continue;
 	      }
-	      if (question.equals("date")) {
+	      if (question.equals("date")) { 
 	    	  System.out.println("Current date is " +date());
 	    	  continue;
 	      }
@@ -258,17 +255,17 @@ public class ChatBot{
 	    }
 	    in.close();  
   }
-  private void chatInfo() {
+  private void chatInfo() { // Starting info
 	  System.out.println(" Simple java chatbot by Slavvok.\n Available commands: " +
 			  "silent, getUp, date, time, change, setName, quit.\n");
   }
-  public void dialog() throws IOException {
+  public void dialog() throws IOException { // Dialog public class 
 	  chatInfo();
 	  dialogVariants();
   }
   
-  public static void main(String[] args) throws IOException{
-    ChatBot newbot = new ChatBot();
+  public static void main(String[] args) throws IOException{ // Main class
+    ChatBot newbot = new ChatBot(); // New ChatBot instance
     newbot.dialog();
   }
 }
