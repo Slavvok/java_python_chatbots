@@ -9,7 +9,7 @@ class Chatbot():
         self.file = 'text.txt'
     def defaultAnswers(self, file):
 
-        with open("./answers/" + self.file, "r") as f:
+        with open("./includes/" + self.file, "r") as f:
             self.answers = f.read().splitlines()
     def newAnswers(self, file):
         self.file = file
